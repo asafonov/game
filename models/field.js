@@ -6,6 +6,11 @@ var Field = function() {
 
   this.setHero = function (hero) {
     _hero = hero;
+    asafonov.messageBus.send(asafonov.events.FIELD_HERO_ADDED, {field: this});
+  }
+
+  this.getHeroPosition = function() {
+    return hero.position;
   }
 
   this.correctPosition = function (obj) {

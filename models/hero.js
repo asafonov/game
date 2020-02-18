@@ -23,6 +23,11 @@ Subject.prototype.move = function (delta) {
   this.position.y += delta.y;
 }
 
+Subject.prototype.moveTo = function (x, y) {
+  this.position.x = x;
+  this.position.y = y;
+}
+
 Subject.prototype.destroy = function() {
   this.position = null;
 }
