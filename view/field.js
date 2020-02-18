@@ -27,7 +27,17 @@ FieldView.prototype.initView = function() {
 }
 
 FieldView.prototype.initSize = function() {
-  this.height = this.width = Math.min(document.documentElement.width, document.documentElement.height);
+  this.height = this.width = Math.min(document.documentElement.offsetWidth, document.documentElement.offsetHeight);
   this.element.style.width = this.width + 'px';
   this.element.style.height = this.height + 'px';
+  console.log(this.width + 'px');
+  console.log(this.height + 'px');
+}
+
+FieldView.prototype.onHeroAdded = function (eventData) {
+  console.log("onHeroAdded");
+}
+
+FieldView.prototype.onHeroMoved = function (eventData) {
+  console.log("onHeroMoved");
 }
