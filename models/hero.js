@@ -19,13 +19,13 @@ Subject.prototype.moveDown = function() {
 }
 
 Subject.prototype.move = function (delta) {
-  this.position.x += delta.x;
-  this.position.y += delta.y;
+  this.moveTo(this.position.x + delta.x, this.position.y + delta.y);
 }
 
 Subject.prototype.moveTo = function (x, y) {
   this.position.x = x;
   this.position.y = y;
+  asafonov.messageBus.send(asafonov.events.FIELD_HERO_MOVED, {position: this.position});
 }
 
 Subject.prototype.destroy = function() {

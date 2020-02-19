@@ -9,19 +9,33 @@ var Field = function() {
     asafonov.messageBus.send(asafonov.events.FIELD_HERO_ADDED, {field: this});
   }
 
+  this.getHero = function() {
+    return _hero;
+  }
+
   this.getHeroPosition = function() {
-    return hero.position;
+    return _hero.position;
   }
 
   this.correctPosition = function (obj) {
-    obj.position.x = Math.min(obj.position.x, this.width - 1);
-    obj.position.y = Math.min(obj.position.y, this.height - 1);
-    obj.position.x = Math.max(obj.position.x, 0);
-    obj.position.y = Math.max(obj.position.y, 0);
+    var x = Math.min(obj.position.x, this.width - 1);
+    var y = Math.min(obj.position.y, this.height - 1);
+    x = Math.max(x, 0);
+    y = Math.max(y, 0);
+
+    if (x != obj.position.x || y != obj.position.y) {
+      obj.moveTo(x, y);
+    }
+  }
+
+  this.moveTo = function (x, y, obj) {
+    obj = obj || _hero;
+    obj.moveTo(x, y);
   }
 
   for (var i = 0; i < _positions.length; ++i) {
     this[_positions[i]] = function (obj) {
+      obj = obj || _hero;
       obj[_positions[i]]();
       this.correctPosition(obj);
     }
