@@ -23,15 +23,35 @@ HeroView.prototype.onHeroMoved = function (eventData) {
   }
 
   if (! this.isOnScreen()) {
-    this.element.scrollIntoView({
+    var from = eventData.fromPosition;
+    var to = eventData.obj.position;
+    var scrollAttributes = {
       behavior: "smooth",
-      block: this.isMovingForward(eventData.fromPosition, eventData.obj.position) ? "start" : "end",
-      inline: this.isMovingForward(eventData.fromPosition, eventData.obj.position) ? "start" : "end"
-    });
+      block: "nearest",
+      inline: "nearest"
+    };
+
+    if (this.isVerticalMove(from, to)) {
+      scrollAttributes.block = this.isMovingForward(from, to) ? "start" : "end";
+    }
+
+    if (this.isHorizontalMove(from, to)) {
+      scrollAttributes.inline = this.isMovingForward(from, to) ? "start" : "end";
+    }
+
+    this.element.scrollIntoView(scrollAttributes);
   }
 }
 
-HeroView.prototype.isMovingForward = function(fromPosition, toPosition) {
+HeroView.prototype.isHorizontalMove = function (fromPosition, toPosition) {
+  return fromPosition.x != toPosition.x;
+}
+
+HeroView.prototype.isVerticalMove = function (fromPosition, toPosition) {
+  return fromPosition.y != toPosition.y;
+}
+
+HeroView.prototype.isMovingForward = function (fromPosition, toPosition) {
   return toPosition.x > fromPosition.x || toPosition.y > fromPosition.y
 }
 
