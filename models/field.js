@@ -1,6 +1,6 @@
 var Field = function() {
-  this.width = 16;
-  this.height = 16;
+  this.width = 10;
+  this.height = 10;
   var _hero = null;
   var _positions = ['moveUp', 'moveDown', 'moveLeft', 'moveRight'];
   asafonov.messageBus.subscribe(asafonov.events.FIELD_HERO_MOVED, this, 'onHeroMoved');

@@ -32,11 +32,15 @@ FieldView.prototype.initView = function() {
 }
 
 FieldView.prototype.initSize = function() {
-  this.height = this.width = Math.min(document.documentElement.offsetWidth, document.documentElement.offsetHeight);
+  this.width = document.documentElement.offsetWidth;
+  this.height = document.documentElement.offsetHeight;
   this.element.style.width = this.width + 'px';
   this.element.style.height = this.height + 'px';
-  this.itemWidth = this.width / this.field.width;
-  this.itemHeight = this.height / this.field.height;
+  var minSize = Math.min(this.width, this.height);
+  this.itemWidth = minSize / this.field.width;
+  this.itemHeight = minSize / this.field.height;
+  this.field.width = parseInt(this.width / this.itemWidth, 10);
+  this.field.height = parseInt(this.height / this.itemHeight, 10);
   this.element.style.backgroundSize = this.itemWidth + 'px ' + this.itemHeight + 'px';
   this.heroView.setSize(this.itemWidth, this.itemHeight);
 }
