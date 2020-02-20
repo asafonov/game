@@ -1,7 +1,10 @@
 var FieldView = function() {
   this.width;
   this.height;
+  this.itemWidth;
+  this.itemHeight;
   this.field;
+  this.onKeyDownProxy = this.onKeyDown.bind(this);
 }
 
 FieldView.prototype.init = function() {
@@ -12,6 +15,7 @@ FieldView.prototype.init = function() {
 
 FieldView.prototype.addEventListeners = function() {
   asafonov.messageBus.subscribe(asafonov.events.FIELD_HERO_ADDED, this, 'onHeroAdded');
+  window.addEventListener('keydown', this.onKeyDownProxy);
 }
 
 FieldView.prototype.initModels = function() {
@@ -31,11 +35,23 @@ FieldView.prototype.initSize = function() {
   this.height = this.width = Math.min(document.documentElement.offsetWidth, document.documentElement.offsetHeight);
   this.element.style.width = this.width + 'px';
   this.element.style.height = this.height + 'px';
-  this.heroView.setSize(this.width / this.field.width, this.height / this.field.height);
+  this.itemWidth = this.width / this.field.width;
+  this.itemHeight = this.height / this.field.height;
+  this.heroView.setSize(this.itemWidth, this.itemHeight);
 }
 
 FieldView.prototype.onHeroAdded = function (eventData) {
   this.element.appendChild(this.heroView.element);
-  this.field.moveTo(0, 0)
 }
 
+FieldView.prototype.onKeyDown = function (e) {
+  if (e.keyCode == 37) {
+    this.field.getHero().moveLeft();
+  } else if (e.keyCode == 38) {
+    this.field.getHero().moveUp();
+  } else if (e.keyCode == 39) {
+    this.field.getHero().moveRight();
+  } else if (e.keyCode == 40) {
+    this.field.getHero().moveDown();
+  }
+}
