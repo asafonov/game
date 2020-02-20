@@ -37,6 +37,7 @@ FieldView.prototype.initSize = function() {
   this.element.style.height = this.height + 'px';
   this.itemWidth = this.width / this.field.width;
   this.itemHeight = this.height / this.field.height;
+  this.element.style.backgroundSize = this.itemWidth + 'px ' + this.itemHeight + 'px';
   this.heroView.setSize(this.itemWidth, this.itemHeight);
 }
 
