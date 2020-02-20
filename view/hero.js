@@ -21,4 +21,20 @@ HeroView.prototype.onHeroMoved = function (eventData) {
   if (! asafonov.config.allowedOrientations || asafonov.config.allowedOrientations.indexOf(orientation) > -1) {
     this.element.style.backgroundImage = 'url(skin/hero_' + orientation + '.png)';
   }
+
+  if (! this.isOnScreen()) {
+    this.element.scrollIntoView({
+      behavior: "smooth",
+      block: this.isMovingForward(eventData.fromPosition, eventData.obj.position) ? "start" : "end",
+      inline: this.isMovingForward(eventData.fromPosition, eventData.obj.position) ? "start" : "end"
+    });
+  }
+}
+
+HeroView.prototype.isMovingForward = function(fromPosition, toPosition) {
+  return toPosition.x > fromPosition.x || toPosition.y > fromPosition.y
+}
+
+HeroView.prototype.isOnScreen = function() {
+  return this.element.offsetTop >= document.body.scrollTop && this.element.offsetTop < document.body.scrollTop + document.documentElement.offsetHeight && this.element.offsetLeft >= document.body.scrollLeft && this.element.offsetLeft < document.body.scrollLeft + document.documentElement.offsetWidth;
 }

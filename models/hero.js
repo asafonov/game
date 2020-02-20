@@ -33,7 +33,8 @@ Subject.prototype.move = function (delta) {
 }
 
 Subject.prototype.moveTo = function (x, y) {
+  var position = new Point(this.position.x, this.position.y);
   this.position.x = x;
   this.position.y = y;
-  asafonov.messageBus.send(asafonov.events.FIELD_HERO_MOVED, {obj: this});
+  asafonov.messageBus.send(asafonov.events.FIELD_HERO_MOVED, {obj: this, fromPosition: position});
 }
