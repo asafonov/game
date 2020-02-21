@@ -18,6 +18,7 @@ FieldView.prototype.addEventListeners = function() {
   asafonov.messageBus.subscribe(asafonov.events.OBJECT_ADDED, this, 'onObjectAdded');
   window.addEventListener('keydown', this.onKeyDownProxy);
   window.addEventListener('click', this.onClickProxy);
+  window.addEventListener('touchstart', this.onClickProxy);
 }
 
 FieldView.prototype.initView = function() {
