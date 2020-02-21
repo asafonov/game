@@ -6,7 +6,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var objectMap = [null];
 
   for (var i = 0; i < 100 * 120; ++i) {
-    objectMap.push(Math.random() < 0.25 ? 'stone' : null);
+    var type = null;
+    var random = Math.random();
+
+    if (random < 0.125) {
+      type = 'stone';
+    } else if (random < 0.25) {
+      type = 'lake';
+    }
+
+    objectMap.push(type);
   }
 
   view.field.setObjectMap(objectMap);
