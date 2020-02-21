@@ -1,6 +1,7 @@
 var Field = function() {
   this.width = 100;
   this.height = 120;
+  var _objects = [];
   var _hero = null;
   var _positions = ['moveUp', 'moveDown', 'moveLeft', 'moveRight'];
   asafonov.messageBus.subscribe(asafonov.events.FIELD_HERO_MOVED, this, 'onHeroMoved');
@@ -20,17 +21,35 @@ var Field = function() {
   }
 
   this.onHeroMoved = function (eventData) {
-    this.correctPosition(eventData.obj);
+    this.correctPosition(eventData.obj, eventData.fromPosition);
   }
 
-  this.correctPosition = function (obj) {
-    var x = Math.min(obj.position.x, this.width - 1);
-    var y = Math.min(obj.position.y, this.height - 1);
-    x = Math.max(x, 0);
-    y = Math.max(y, 0);
+  this.positionToIndex = function (position) {
+    return position.y * this.width + position.x;
+  }
 
-    if (x != obj.position.x || y != obj.position.y) {
-      obj.moveTo(x, y);
+  this.indexToPosition = function (index) {
+    return new Point(index % this.width, parseInt(index / this.width, 10));
+  }
+
+  this.setObjectMap = function (objects) {
+    for (var i = 0; i < objects.length; ++i) {
+      if (objects[i] !== null && objects[i] !== undefined) {
+        this.addObject(objects[i], this.indexToPosition(i));
+      }
+    }
+  }
+
+  this.addObject = function (type, position) {
+    _objects[this.positionToIndex(position)] = type;
+    asafonov.messageBus.send(asafonov.events.OBJECT_ADDED, {type: type, position: position});
+  }
+
+  this.correctPosition = function (obj, fromPosition) {
+    var i = this.positionToIndex(obj.position);
+
+    if (obj.position.x < 0 || obj.position.y < 0 || obj.position.x > this.width - 1 || obj.position.y > this.height - 1 || (_objects[i] !== null && _objects[i] !== undefined)) {
+      obj.moveTo(fromPosition.x, fromPosition.y);
     }
   }
 }

@@ -8,20 +8,14 @@ var FieldView = function() {
 }
 
 FieldView.prototype.init = function() {
-  this.initView();
   this.addEventListeners();
-  this.initModels();
+  this.initView();
 }
 
 FieldView.prototype.addEventListeners = function() {
   asafonov.messageBus.subscribe(asafonov.events.FIELD_HERO_ADDED, this, 'onHeroAdded');
+  asafonov.messageBus.subscribe(asafonov.events.OBJECT_ADDED, this, 'onObjectAdded');
   window.addEventListener('keydown', this.onKeyDownProxy);
-}
-
-FieldView.prototype.initModels = function() {
-  this.field = new Field();
-  this.field.setHero(new Subject());
-  this.initSize();
 }
 
 FieldView.prototype.initView = function() {
@@ -29,6 +23,7 @@ FieldView.prototype.initView = function() {
   this.element.id = 'field';
   document.body.appendChild(this.element);
   this.heroView = new HeroView();
+  this.initSize();
 }
 
 FieldView.prototype.initSize = function() {
@@ -41,6 +36,17 @@ FieldView.prototype.initSize = function() {
   this.element.style.height = this.field.height * this.itemHeight + 'px';
   this.element.style.backgroundSize = this.itemWidth + 'px ' + this.itemHeight + 'px';
   this.heroView.setSize(this.itemWidth, this.itemHeight);
+}
+
+FieldView.prototype.onObjectAdded = function (eventData) {
+  var element = document.createElement('div');
+  element.style.marginTop = this.itemHeight * eventData.position.y + 'px';
+  element.style.marginLeft = this.itemWidth * eventData.position.x + 'px';
+  element.style.width = this.itemWidth + 'px';
+  element.style.height = this.itemHeight + 'px';
+  element.style.backgroundSize = this.itemWidth + 'px ' + this.itemHeight + 'px';
+  element.className = eventData.type;
+  this.element.appendChild(element);
 }
 
 FieldView.prototype.onHeroAdded = function (eventData) {
