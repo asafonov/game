@@ -5,6 +5,7 @@ var FieldView = function() {
   this.itemHeight;
   this.field;
   this.onKeyDownProxy = this.onKeyDown.bind(this);
+  this.onClickProxy = this.onClick.bind(this);
 }
 
 FieldView.prototype.init = function() {
@@ -16,6 +17,7 @@ FieldView.prototype.addEventListeners = function() {
   asafonov.messageBus.subscribe(asafonov.events.FIELD_HERO_ADDED, this, 'onHeroAdded');
   asafonov.messageBus.subscribe(asafonov.events.OBJECT_ADDED, this, 'onObjectAdded');
   window.addEventListener('keydown', this.onKeyDownProxy);
+  window.addEventListener('click', this.onClickProxy);
 }
 
 FieldView.prototype.initView = function() {
@@ -62,5 +64,17 @@ FieldView.prototype.onKeyDown = function (e) {
     this.field.getHero().moveRight();
   } else if (e.keyCode == 40) {
     this.field.getHero().moveDown();
+  }
+}
+
+FieldView.prototype.onClick = function (e) {
+  if (e.clientY < document.documentElement.offsetHeight / 4) {
+    this.field.getHero().moveUp();
+  } else if (e.clientY > document.documentElement.offsetHeight * 3 / 4) {
+    this.field.getHero().moveDown();
+  } else if (e.clientX < document.documentElement.offsetWidth / 4) {
+    this.field.getHero().moveLeft();
+  } else if (e.clientX > document.documentElement.offsetWidth * 3 / 4) {
+    this.field.getHero().moveRight();
   }
 }
