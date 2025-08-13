@@ -30,8 +30,8 @@ FieldView.prototype.initView = function() {
 }
 
 FieldView.prototype.initSize = function() {
-  this.width = document.documentElement.offsetWidth;
-  this.height = document.documentElement.offsetHeight;
+  this.width = window.screen.width;
+  this.height = window.screen.height;
   var minSize = Math.min(this.width, this.height);
   this.itemWidth = minSize / 8;
   this.itemHeight = minSize / 8;
