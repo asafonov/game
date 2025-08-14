@@ -69,5 +69,12 @@ HeroView.prototype.isMovingForward = function (fromPosition, toPosition) {
 }
 
 HeroView.prototype.isOnScreen = function() {
-  return this.element.offsetTop >= document.body.scrollTop && this.element.offsetTop <= document.body.scrollTop + document.documentElement.offsetHeight - this.height && this.element.offsetLeft >= document.body.scrollLeft && this.element.offsetLeft <= document.body.scrollLeft + document.documentElement.offsetWidth - this.width;
+  const elementTop = this.element.offsetTop
+  const elementLeft = this.element.offsetLeft
+  const scrollTop = document.body.scrollTop
+  const scrollLeft = document.body.scrollLeft
+  const windowHeight = window.screen.height
+  const windowWidth = window.screen.width
+
+  return elementTop >= scrollTop && elementTop <= scrollTop + windowHeight - this.height && elementLeft >= scrollLeft && elementLeft <= scrollLeft + windowWidth - this.width;
 }
