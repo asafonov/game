@@ -1,6 +1,7 @@
 var HeroView = function() {
   this.element = document.createElement('div');
   this.element.id = 'hero';
+  this.element.style.backgroundImage = 'url(skin/hero.png)';
   asafonov.messageBus.subscribe(asafonov.events.FIELD_HERO_MOVED, this, 'onHeroMoved');
 }
 
@@ -12,6 +13,18 @@ HeroView.prototype.setSize = function (width, height) {
   this.element.style.backgroundSize = width + 'px ' + height + 'px';
 }
 
+HeroView.prototype.applyOrientation = function (orientation) {
+  if (orientation === 'left') {
+    this.element.style.transform = 'rotate(90deg)'
+  } else if (orientation === 'right') {
+    this.element.style.transform = 'rotate(270deg)'
+  } else if (orientation === 'up') {
+    this.element.style.transform = 'rotate(0deg)'
+  } else {
+    this.element.style.transform = 'rotate(0deg)'
+  }
+}
+
 HeroView.prototype.onHeroMoved = function (eventData) {
   var position = eventData.obj.position;
   var orientation = eventData.obj.orientation;
@@ -19,7 +32,7 @@ HeroView.prototype.onHeroMoved = function (eventData) {
   this.element.style.marginTop = (this.height * position.y) + 'px';
 
   if (! asafonov.config.allowedOrientations || asafonov.config.allowedOrientations.indexOf(orientation) > -1) {
-    this.element.style.backgroundImage = 'url(skin/hero_' + orientation + '.png)';
+    this.applyOrientation(orientation)
   }
 
   if (! this.isOnScreen()) {
