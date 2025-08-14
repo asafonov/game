@@ -1,22 +1,22 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
-  var view = new FieldView();
-  view.field = new Field();
-  view.init();
-  view.field.setHero(new Subject());
-  var objectMap = [null];
+  var view = new FieldView()
+  view.field = new Field()
+  view.init()
+  view.field.setHero(new Subject())
+  var objectMap = [null]
 
   for (var i = 0; i < 100 * 120; ++i) {
-    var type = null;
-    var random = Math.random();
+    var type = null
+    var random = Math.random()
 
     if (random < 0.125) {
-      type = 'stone';
+      type = 'stone'
     } else if (random < 0.25) {
-      type = 'lake';
+      type = 'lake'
     }
 
-    objectMap.push(type);
+    objectMap.push(type)
   }
 
-  view.field.setObjectMap(objectMap);
-});
+  view.field.setObjectMap(objectMap)
+})
