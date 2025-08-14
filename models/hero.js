@@ -1,6 +1,6 @@
 var Subject = function() {
   this.position = new Point(0, 0)
-  this.orientation = Subject.ORIENTATION_DOWN
+  this.orientation = Subject.ORIENTATION_RIGHT
 }
 
 Subject.ORIENTATION_LEFT = 'left'

@@ -14,14 +14,10 @@ HeroView.prototype.setSize = function (width, height) {
 }
 
 HeroView.prototype.applyOrientation = function (orientation) {
-  if (orientation === 'left') {
-    this.element.style.transform = 'rotate(90deg)'
-  } else if (orientation === 'right') {
-    this.element.style.transform = 'rotate(270deg)'
-  } else if (orientation === 'up') {
-    this.element.style.transform = 'rotate(0deg)'
-  } else {
-    this.element.style.transform = 'rotate(0deg)'
+  if (orientation === Subject.ORIENTATION_LEFT) {
+    this.element.style.transform = 'scaleX(-1)'
+  } else if (orientation === Subject.ORIENTATION_RIGHT) {
+    this.element.style.transform = 'scaleX(1)'
   }
 }
 
